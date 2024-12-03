@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        box-sizing: border-box;
+        padding: 0%;
+        margin: 0;
+        font-family: sans-serif;
+    }
+    body{
+        width: 100%;
+        height: 100vh;
+        background-color: #786;
+    }
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .left, .right{
+        width: 320px;
+        height: 400px;
+        border: 4px solid red;
+        margin: 50px;
+        padding: 10px 20px;
+    }
+
+    .items{
+        width: 100%;
+        height: 80px;
+        background-color: aqua;
+        margin-top: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="left">
+            <div class="items" draggable="true">item1</div>
+            <div class="items" draggable="true">item2</div>
+            <div class="items" draggable="true">item3</div>
+            <div class="items" draggable="true">item4</div>
+
+        </div>
+        <div class="right">
+            
+        </div>
+    </div>
+
+    <script>
+        // Get references to the items and containers
+    const items = document.querySelectorAll(".items");
+    const left = document.querySelector(".left");
+    const right = document.querySelector(".right");
+
+    let selectedEle = null;
+
+    // Add dragstart event listener to all draggable items
+    items.forEach((item) => {
+        item.addEventListener("dragstart", (e) => {
+            selectedEle = e.target; // Store the selected element
+        });
+    });
+
+    // Create a reusable function to handle dragover and drop events
+    const addDragEvents = (container) => {
+        container.addEventListener("dragover", (e) => {
+            e.preventDefault(); // Allow dropping
+        });
+
+        container.addEventListener("drop", () => {
+            if (selectedEle) {
+                container.appendChild(selectedEle); // Move the item
+                selectedEle = null; // Clear the selection
+            }
+        });
+    };
+
+    // Add drag events to both containers
+    addDragEvents(left);
+    addDragEvents(right);
+    </script>
+</body>
+</html>
